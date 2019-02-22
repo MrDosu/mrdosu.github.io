@@ -89,6 +89,9 @@ var pmx = {
     rand: {
         product: function() {
             return randomProduct();
+        },
+        inbound: function(warehouseId, jfskus) {
+            return randomInbound(warehouseId, jfskus);
         }
     }
 }
