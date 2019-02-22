@@ -1,3 +1,7 @@
+function randInt(max) {
+    return Math.floor(Math.random() * Math.floor(max));
+}
+
 function randStr(prefix, length, nullProbability) {
     if(nullProbability) {
         var rp = Math.floor(Math.random() * Math.floor(100));
@@ -22,6 +26,24 @@ function randomProduct() {
         }
     }
     return p;
+}
+
+function randomInbound(warehouseId, jfskus) {
+    var items = [];
+    jfskus.forEach(e => {
+        items.push({
+            inboundItemId: randStr("IbndItem", 10),
+            jfsku: e,
+            quantity: randInt(100) + 1
+        });
+    });
+
+    return {
+        merchantInboundNumber: randStr("IbndNum", 10),
+        warehouseId: warehouseId,
+        note: randStr("Note", 20),
+        items: items
+    }
 }
 
 function clearArray(vars, key) {
