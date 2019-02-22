@@ -5,7 +5,7 @@ function randStr(prefix, length, nullProbability) {
             return null;
         }
     }
-    var randPart = Math.random().toString(36).substring(2, length);
+    var randPart = Math.random().toString(36).substring(2, length + 2);
     return prefix + "_" + randPart;
 }
 
