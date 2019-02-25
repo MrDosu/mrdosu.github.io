@@ -13,46 +13,25 @@ function addToArray(vars, key, value) {
     }
 }
 
-var callbackStack = {
-    callback: null,
-    requests: [],
-    iter: 0,
-    idx : 0
- }
-function setupCallbackStack(callback, requests, iterationCount = 1) {
-    callbackStack.callback = callback;
-    callbackStack.requests = requests;
-    callbackStack.iter = iterationCount;
-    callbackStack.idx = 0;
+function probability(percentage) {
+    var r = Math.floor(Math.random() * Math.floor(100));
+    return r <= percentage;
 }
 
-function nextCallback() {
-    if(callbackStack.iter > 0) {
-        if(callbackStack.idx <= callbackStack.requests.length -1) {
-            var next = callbackStack.requests[callbackStack.idx];
-            callbackStack.idx = callbackStack.idx + 1;
-            return next;
-        }
-        else {
-            if(callbackStack.iter == 1) {
-                callbackStack.idx = 0;
-                callbackStack.iter = 0;
-                return callbackStack.callback;
-            }
-            else {
-                callbackStack.iter = callbackStack.iter - 1;
-                if(callbackStack.requests.length > 0) {
-                    callbackStack.idx = 1;
-                    return callbackStack.requests[0];
-                }
-                else {
-                    callbackStack.idx = 0;
-                    return callbackStack.callback;
-                }
-            }
-        }
+function randInt(from, to) {
+    return Math.floor(Math.random() * Math.floor(to - from)) + from;
+}
+
+function shuffleArray(array) {
+    var currentIndex = array.length, temporaryValue, randomIndex;
+    while (0 !== currentIndex) {
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
     }
-    return callbackStack.callback;
+    return array;
 }
 
 var pmx = {
@@ -86,15 +65,8 @@ var pmx = {
             addToArray(pm.variables, key, value);
         }
     },
-    stack: {
-        set: function(callback, requests, iterations = 1) {
-            setupCallbackStack(callback, requests, iterations);
-        },
-        navigateNext: function() {
-            var next = nextCallback();
-            if(next) {
-                postman.setNextRequest(next);
-            }
-        }
+    rand: {
+        int: randInt,
+        shuffle: shuffleArray
     }
 }
