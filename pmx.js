@@ -14,11 +14,13 @@ function addToArray(vars, key, value) {
 }
 
 var callbackStack = {
+    callback,
     requests: [],
     iter: 0,
     idx : 0
  }
-function setupCallbackStack(requests, iterationCount = 1) {
+function setupCallbackStack(callback, requests, iterationCount = 1) {
+    callbackStack.callback = callback;
     callbackStack.requests = requests;
     callbackStack.iter = iterationCount;
     callbackStack.idx = 0;
@@ -35,7 +37,7 @@ function nextCallback() {
             if(callbackStack.iter == 1) {
                 callbackStack.idx = 0;
                 callbackStack.iter = 0;
-                return null;
+                return callbackStack.callback;
             }
             else {
                 callbackStack.iter = callbackStack.iter - 1;
@@ -45,12 +47,12 @@ function nextCallback() {
                 }
                 else {
                     callbackStack.idx = 0;
-                    return null;
+                    return callbackStack.callback;
                 }
             }
         }
     }
-    return null;
+    return callbackStack.callback;
 }
 
 var pmx = {
@@ -85,8 +87,8 @@ var pmx = {
         }
     },
     stack: {
-        set: function(requests, iterations = 1) {
-            setupCallbackStack(requests, iterations);
+        set: function(callback, requests, iterations = 1) {
+            setupCallbackStack(callback, requests, iterations);
         },
         getNext: function() {
             return nextCallback();
