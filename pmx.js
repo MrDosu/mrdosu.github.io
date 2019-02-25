@@ -14,7 +14,7 @@ function addToArray(vars, key, value) {
 }
 
 var callbackStack = {
-    callback,
+    callback: null,
     requests: [],
     iter: 0,
     idx : 0
