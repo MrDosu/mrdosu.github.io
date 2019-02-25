@@ -67,6 +67,7 @@ var pmx = {
     },
     rand: {
         int: randInt,
+        prob: probability,
         shuffle: shuffleArray
     }
 }
