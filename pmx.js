@@ -90,8 +90,11 @@ var pmx = {
         set: function(callback, requests, iterations = 1) {
             setupCallbackStack(callback, requests, iterations);
         },
-        getNext: function() {
-            return nextCallback();
+        navigateNext: function() {
+            var next = nextCallback();
+            if(next) {
+                postman.setNextRequest(next);
+            }
         }
     }
 }
