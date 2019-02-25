@@ -13,6 +13,46 @@ function addToArray(vars, key, value) {
     }
 }
 
+var callbackStack = {
+    requests: [],
+    iter: 0,
+    idx : 0
+ }
+function setupCallbackStack(requests, iterationCount = 1) {
+    callbackStack.requests = requests;
+    callbackStack.iter = iterationCount;
+    callbackStack.idx = 0;
+}
+
+function nextCallback() {
+    if(callbackStack.iter > 0) {
+        if(callbackStack.idx <= callbackStack.requests.length -1) {
+            var next = callbackStack.requests[callbackStack.idx];
+            callbackStack.idx = callbackStack.idx + 1;
+            return next;
+        }
+        else {
+            if(callbackStack.iter == 1) {
+                callbackStack.idx = 0;
+                callbackStack.iter = 0;
+                return null;
+            }
+            else {
+                callbackStack.iter = callbackStack.iter - 1;
+                if(callbackStack.requests.length > 0) {
+                    callbackStack.idx = 1;
+                    return callbackStack.requests[0];
+                }
+                else {
+                    callbackStack.idx = 0;
+                    return null;
+                }
+            }
+        }
+    }
+    return null;
+}
+
 var pmx = {
     set: function(key, value) {
         pm.environment.set(key, value);
@@ -42,6 +82,14 @@ var pmx = {
         },
         add: function(key, value) {
             addToArray(pm.variables, key, value);
+        }
+    },
+    stack: {
+        set: function(requests, iterations = 1) {
+            setupCallbackStack(requests, iterations);
+        },
+        getNext: function() {
+            return nextCallback();
         }
     }
 }
