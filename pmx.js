@@ -34,6 +34,25 @@ function shuffleArray(array) {
     return array;
 }
 
+function handleResponse(code, func) {
+    if(pm.response.code == code) {
+        var res = pm.response.json();
+        func(res);
+    }
+    else {
+        var res = pm.response.json();
+        var errorCode = res.errorCode.code;
+        var message = "";
+        res.errorMessages.forEach(e => {
+            message = message + e.message + "\n";
+        });
+        pm.test(errorCode + ": " + message, function() {
+            postman.setNextRequest(null);
+            pm.response.to.have.status(code);
+        });
+    }
+}
+
 var pmx = {
     set: function(key, value) {
         pm.environment.set(key, value);
@@ -69,5 +88,6 @@ var pmx = {
         int: randInt,
         prob: probability,
         shuffle: shuffleArray
-    }
+    },
+    when: handleResponse
 }
