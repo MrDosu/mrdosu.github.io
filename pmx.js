@@ -39,7 +39,7 @@ function handleResponse(code, func) {
         func();
     }
     else {
-        pm.test(pm.response, function() {
+        pm.test(pm.response.text(), function() {
             postman.setNextRequest(null);
             pm.response.to.have.status(code);
         });
