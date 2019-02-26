@@ -22,18 +22,6 @@ function randInt(from, to) {
     return Math.floor(Math.random() * Math.floor(to - from)) + from;
 }
 
-function shuffleArray(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex;
-    while (0 !== currentIndex) {
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex -= 1;
-      temporaryValue = array[currentIndex];
-      array[currentIndex] = array[randomIndex];
-      array[randomIndex] = temporaryValue;
-    }
-    return array;
-}
-
 function handleResponse(code, func) {
     if(pm.response.code == code) {
         func();
@@ -53,20 +41,18 @@ var pmx = {
     get: function(key) {
         return pm.environment.get(key);
     },
+    clear: function(key) {
+        clearArray(pm.environment, key);
+    },
+    add: function(key, value) {
+        addToArray(pm.environment, key, value);
+    },
     globals: {
         clear: function(key) {
             clearArray(pm.globals, key);
         },
         add: function(key, value) {
             addToArray(pm.globals, key, value);
-        }
-    },
-    env: {
-        clear: function(key) {
-            clearArray(pm.environment, key);
-        },
-        add: function(key, value) {
-            addToArray(pm.environment, key, value);
         }
     },
     vars: {
@@ -79,8 +65,7 @@ var pmx = {
     },
     rand: {
         int: randInt,
-        prob: probability,
-        shuffle: shuffleArray
+        prob: probability
     },
     when: handleResponse
 }
