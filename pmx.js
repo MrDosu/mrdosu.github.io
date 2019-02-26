@@ -40,12 +40,14 @@ function handleResponse(code, func) {
     }
     else {
         var res = pm.response.json();
-        var errorCode = res.errorCode.code;
-        var message = "";
-        res.errorMessages.forEach(e => {
-            message = message + e.message + "\n";
-        });
-        pm.test(errorCode + ": " + message, function() {
+        // var errorCode = res.errorCode.code;
+        // var message = "";
+        // res.errorMessages.forEach(e => {
+        //     message = message + e.message + "\n";
+        // });
+
+        // pm.test(errorCode + ": " + message, function() {
+        pm.test(JSON.stringify(res), function() {
             postman.setNextRequest(null);
             pm.response.to.have.status(code);
         });
