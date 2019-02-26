@@ -36,8 +36,7 @@ function shuffleArray(array) {
 
 function handleResponse(code, func) {
     if(pm.response.code == code) {
-        var res = pm.response.json();
-        func(res);
+        func();
     }
     else {
         var res = pm.response.json();
