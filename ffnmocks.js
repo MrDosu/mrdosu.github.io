@@ -26,7 +26,7 @@ function probability(percentage) {
 }
 
 function pickOne(choices, nullProbability) {
-    if(probability(nullProbability)) {
+    if(!probability(nullProbability)) {
         return null;
     }
     var idx = randInt(0, choices.length - 1);
