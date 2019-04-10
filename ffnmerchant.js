@@ -42,5 +42,6 @@ function stocks(done) {
 
 var ffnmerchant = {
     warehouses: warehouses,
-    stocksInWarehouse: stocksInWarehouse
+    stocksInWarehouse: stocksInWarehouse,
+    stocks: stocks
 }
