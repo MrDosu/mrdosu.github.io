@@ -6,7 +6,7 @@ function randDouble(from, to) {
     return (Math.random() * (to - from)) + from;
 }
 
-function randStr(prefix, length, nullProbability) {
+function randStr(prefix, length, nullProbability = -1) {
     if (nullProbability) {
         var rp = Math.floor(Math.random() * Math.floor(100));
         if (rp <= nullProbability) {
@@ -25,7 +25,7 @@ function probability(percentage) {
     return r <= percentage;
 }
 
-function pickOne(choices, nullProbability) {
+function pickOne(choices, nullProbability = -1) {
     if (!probability(nullProbability)) {
         return null;
     }
@@ -117,7 +117,13 @@ var ffnmocks = {
     inbound: function (warehouseId, jfskus) {
         return randomInbound(warehouseId, jfskus);
     },
-
+    rand: {
+        string: randStr,
+        int: randInt,
+        double: randDouble,
+        pick: pickOne,
+        probability: probability
+    },
     mock: {
         address: mockAddress
     }
