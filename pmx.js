@@ -34,6 +34,18 @@ function handleResponse(code, func) {
     }
 }
 
+function callEndpoint(method, user, url, body, func) {
+    var params = {
+        url: pmx.set("server") + url,
+        method: method,
+        body: body,
+        header: {
+            Authorization: "Bearer " + pm.globals.get("oauth_" + user + "_token")
+        }
+    };
+    pm.sendRequest(params, func);
+}
+
 var pmx = {
     set: function(key, value) {
         pm.environment.set(key, value);
@@ -67,5 +79,6 @@ var pmx = {
         int: randInt,
         prob: probability
     },
-    when: handleResponse
+    when: handleResponse,
+    call: callEndpoint
 }
