@@ -36,7 +36,7 @@ function handleResponse(code, func) {
 
 function callEndpoint(method, user, url, body, func) {
     var params = {
-        url: pmx.set("server") + url,
+        url: pmx.get("server") + url,
         method: method,
         body: body,
         header: {
