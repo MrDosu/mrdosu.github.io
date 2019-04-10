@@ -7,9 +7,9 @@ function randDouble(from, to) {
 }
 
 function randStr(prefix, length, nullProbability) {
-    if(nullProbability) {
+    if (nullProbability) {
         var rp = Math.floor(Math.random() * Math.floor(100));
-        if(rp <= nullProbability) {
+        if (rp <= nullProbability) {
             return null;
         }
     }
@@ -18,7 +18,7 @@ function randStr(prefix, length, nullProbability) {
 }
 
 function probability(percentage) {
-    if(!percentage) {
+    if (!percentage) {
         return true;
     }
     var r = Math.floor(Math.random() * Math.floor(100));
@@ -26,19 +26,39 @@ function probability(percentage) {
 }
 
 function pickOne(choices, nullProbability) {
-    if(!probability(nullProbability)) {
+    if (!probability(nullProbability)) {
         return null;
     }
     var idx = randInt(0, choices.length - 1);
     return choices[idx];
 }
 
+function mockAddress() {
+    return {
+        "city": "Mortytown",
+        "company": "Rickcorp LLC",
+        "country": "DE",
+        "email": "rick.sanchez@jtl-software.com",
+        "extraAddressLine": "Behind the Shoneys",
+        "extraLine": "Don't hand over to Mortys",
+        "fax": "+49 123456789",
+        "firstname": "Rick",
+        "lastname": "Sanchez",
+        "mobile": "+49 123456789",
+        "phone": "+49 123456789",
+        "salutation": "Mr",
+        "state": "Dimension C-132",
+        "street": "Mortystreet 1",
+        "zip": "12345"
+    }
+}
+
 function randomProduct() {
     var p = {
-        name: randStr("Name",10),
+        name: randStr("Name", 10),
         merchantSku: randStr("SKU", 10),
         productGroup: randStr("Category", 1, 50),
-        originCountry: pickOne(["DE","ES", "FR"], 50),
+        originCountry: pickOne(["DE", "ES", "FR"], 50),
         manufacturer: randStr("Manufacturer", 10, 50),
         weight: randDouble(0, 100),
         note: randStr("Note", 20, 50),
@@ -65,7 +85,7 @@ function randomProduct() {
             unNUmber: randStr("UNNum", 10, 50)
         },
         purchasePrice: {
-            amount: randDouble(1,10000),
+            amount: randDouble(1, 10000),
             currency: pickOne(["EUR", "CAD", "JPY"])
         }
     }
@@ -91,10 +111,14 @@ function randomInbound(warehouseId, jfskus) {
 }
 
 var ffnmocks = {
-    product: function() {
+    product: function () {
         return randomProduct();
     },
-    inbound: function(warehouseId, jfskus) {
+    inbound: function (warehouseId, jfskus) {
         return randomInbound(warehouseId, jfskus);
+    },
+
+    mock: {
+        address: mockAddress
     }
 }
