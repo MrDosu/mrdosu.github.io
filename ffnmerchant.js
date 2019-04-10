@@ -1,9 +1,10 @@
 function warehouses() {
-    var result = [];
-    pmx.call('GET', 'merchant', '/api/v1/merchant/warehouses', null, function(err, res) {
-        result = _.map(res.json().items, 'warehouseId');
+    return new Promise((resolve, reject) => {
+        pmx.call('GET', 'merchant', '/api/v1/merchant/warehouses', null, function(err, res) {
+            resolve(_.map(res.json().items, 'warehouseId'));
+        });
+        return result;
     });
-    return result;
 }
 
 var ffnmerchant = {
