@@ -5,3 +5,7 @@ function warehouses() {
     });
     return result;
 }
+
+var ffnmerchant = {
+    warehouses: warehouses
+}
