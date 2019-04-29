@@ -80,7 +80,7 @@ function randomProduct() {
             isBestBefore: probability(20),
             isDivisible: probability(50),
             isSerialNumber: probability(20),
-            isSetItemMaster: false,
+            isBillOfMaterials: false,
             taric: randStr("Taric", 10, 50),
             unNUmber: randStr("UNNum", 10, 50)
         },
